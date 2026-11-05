@@ -1,0 +1,22 @@
+[package]
+name = "execution-client-bridge-check"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+resolver = "3"
+
+[dependencies]
+execution = { path = "../.." }
+kernel-client = { git = "https://github.com/shuyra-arche/kernel.git", rev = "90d43dbf3ee43fd146f487718eb39e88f2507c05" }
+
+[target.'cfg(target_arch = "riscv64")'.dependencies]
+# Exercise the unchanged legacy entry macro under the consumer's `mold` name.
+mold = { package = "mold-entry", git = "https://github.com/shuyra-arche/mold.git", rev = "8e8b1c2bdf188cf01494a3a93398cc77cd12b3e6" }
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"

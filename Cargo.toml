@@ -14,6 +14,10 @@ bench = false
 doctest = false
 
 [dependencies]
-env = { git = "https://github.com/shuyra-arche/env.git", rev = "d3000253cd5d13d466e91fafd4dbb27a5ec5aaae" }
+kernel-client = { git = "https://github.com/shuyra-arche/kernel.git", rev = "90d43dbf3ee43fd146f487718eb39e88f2507c05" }
+
+[dev-dependencies]
+# Root integration discovery still compiles the historical source-import harness.
+env = { package = "kernel-api-env", git = "https://github.com/shuyra-arche/kernel.git", rev = "90d43dbf3ee43fd146f487718eb39e88f2507c05" }
 talc = { version = "=5.1.1", default-features = false }
 spinning_top = { version = "=0.3.0", default-features = false }

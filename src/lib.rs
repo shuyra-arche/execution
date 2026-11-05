@@ -1,10 +1,9 @@
 #![no_std]
-//! User execution primitives for tasks, memory and program startup.
+//! Legacy program startup adapter for the canonical Kernel Client.
 
 extern crate alloc;
 
 pub mod boot;
-pub mod lock;
-pub mod memory;
-pub mod room;
-pub mod unit;
+mod allocator;
+
+pub use kernel_client::{lock, memory, room, unit};

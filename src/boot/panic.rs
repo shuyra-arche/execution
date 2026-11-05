@@ -1,11 +1,11 @@
-//! Allocation-free panic report for freestanding program ELFs.
+//! Fixed stack-buffer panic report for freestanding program ELFs.
 
 use core::fmt::{self, Write};
 use core::panic::PanicInfo;
 
-use env::NOTE_MAX;
+use kernel_client::NOTE_MAX;
 
-/// Panic text is assembled on the stack; formatting here must never allocate.
+/// Output is bounded; user-provided formatting can have its own effects.
 struct Note {
     buf: [u8; NOTE_MAX],
     len: usize,
@@ -44,5 +44,5 @@ fn panic(info: &PanicInfo) -> ! {
     if let Some(at) = info.location() {
         let _ = write!(note, " at {}:{}:{}", at.file(), at.line(), at.column());
     }
-    crate::room::reap(env::EXIT_PANIC, Some(note.as_str()))
+    crate::room::reap(kernel_client::EXIT_PANIC, Some(note.as_str()))
 }
