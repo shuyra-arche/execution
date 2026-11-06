@@ -4,7 +4,7 @@ pub mod args;
 mod panic;
 mod start;
 
-use env::{EXIT_OK, Reason};
+use kernel_client::{EXIT_OK, Reason};
 
 use crate::room::reap;
 
@@ -148,9 +148,14 @@ pub fn finish(report: Report<'_>) -> ! {
 }
 
 /// Allocate and install this task's initial thread-local storage block.
+///
+/// # Safety
+/// Call exactly once in a fresh task with no TLS installation, before TLS use.
+/// The legacy entry path keeps the installation until task termination.
 #[cfg(target_arch = "riscv64")]
 pub unsafe fn bootstrap() {
-    unsafe { crate::unit::bootstrap() }
+    let _tls = unsafe { kernel_client::__private::initialize_tls() }
+        .expect("tls bootstrap alloc failed");
 }
 
 /// Run a program entry point and report its return value to the kernel.

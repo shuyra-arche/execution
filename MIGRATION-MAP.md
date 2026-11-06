@@ -1,5 +1,8 @@
 # Migration map
 
+This is the historical extraction map, not a hash inventory of the current
+Client adapter. See [README.md](README.md) for the current compilation boundary.
+
 Source: `crates/execution` at frozen commit
 `66bb8b5c342c50b141eb935a85efdfcecb91451b`,
 branch `codex/shuyra-execution-extraction`,
